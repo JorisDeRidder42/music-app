@@ -21,7 +21,7 @@
           <button class="pause fa-solid fa-pause" @click="pause" v-else></button>
           <button class="next fa-solid fa-forward-step" @click="next"></button>
       </div>
-      <h1 class="playlist">My playlist</h1>
+      <h1 class="playlist"> {{ playlist }}</h1>
       <div v-for="song in songs" :key="song.title" @click="play(song)" :class="(song.src == current.src) ? 'song playing' : 'song'">
        <img  class="artist-image" :src="song.url">
         <h2 class="song-title">{{ song.title }} </h2>
@@ -41,6 +41,7 @@ export default {
             index: 0,
             isPlaying: false,
             player: new Audio(),
+            playlist: "music-joris",
             songs: [
                 {
                     title: "Rise",
@@ -60,7 +61,7 @@ export default {
                 },
                 {
                     title: "Wildfire",
-                    artist: "LEC-version",
+                    artist: "LEC",
                     src: require("./assets/music/Wildfire - LEC.mp3"),
                     url: require('./assets/images/wildfire.jpg'),
                     time: "3:28",
@@ -76,9 +77,10 @@ export default {
                 this.player.src = this.current.src;
             }
             this.player.play();
+            //song ended go to next
             this.player.addEventListener("ended", function () {
                 this.index++;
-                if (this.index > this.songs.length - 1) {
+                if (this.index > this.songs.length -1) {
                     this.index = 0;
                 }
                 this.current = this.songs[this.index];
@@ -126,8 +128,6 @@ export default {
   }
   :root{
     background: #212121;
-  }
-  #app{
     font-family: sans-serif;
   }
   .image{
@@ -139,9 +139,6 @@ export default {
     width: 100px;
     height: 100px;
     border-radius: 10%;
-  }
-  .active{
-    background-color:green;
   }
   header{
     display: flex;
@@ -157,10 +154,6 @@ export default {
   }
   .fa-heart{
     font-size: 1.3em;
-    color: #ffffff;
-  }
-  i{
-    font-size: 1em;
     color: #ffffff;
   }
   main{
@@ -206,7 +199,7 @@ export default {
     cursor: pointer;
   }
     button:hover{
-    opacity: 0.8;
+    opacity: 0.5;
   }
   .play, .pause{
     font-size: 1.5em;
@@ -223,7 +216,7 @@ export default {
     color: #fff;
   }
   .playlist{
-    margin-bottom: 1em;
+    margin-left: 15px;
     color: #fff
   }
   .playlist h3{
